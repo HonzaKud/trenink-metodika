@@ -1,0 +1,50 @@
+[
+  {
+    "id": "pohybove-hry-na-lede",
+    "kategorie": "Hry",
+    "prvek": "Pohybové hry na ledě",
+    "popis": "Herní rozcvičky – honičky, mrazík, žralok, padající stromy",
+    "psychosomatika": "Nábor – 2. třída: Zásadní pro rozvoj rovnováhy, odvahy a radosti z pohybu. Slouží k přirozenému učení se skrz hru.\n3.–4. třída: Hry získávají rychlost a směr, rozvíjí se prostorové vnímání a reakce na podněty.\n5.–8. třída: Používají se jako aktivní rozcvičení, reakční trénink a nástroj pro zvyšování herní připravenosti.",
+    "obsah": {
+      "nabor": "Zábavné hry rozvíjející základní pohyb na ledě. Modelové cvičení: Krab a ryby…",
+      "1": "Rozvoj základních bruslařských dovedností formou her. Modelové cvičení: Ledová sopka…",
+      "2": "Větší rozsah pohybů a reakce. Modelové cvičení: Stíhači…",
+      "3": "Koordinace a rovnováha, větší intenzita. Modelové cvičení: Zmrzlíci…",
+      "4": "Dynamické hry s rychlými změnami směru. Modelové cvičení: Opičí dráha…",
+      "5-6": "Součást rozcvičení nebo uvolnění. Modelové cvičení: Vlna…",
+      "7-8": "Soutěžní warm-up. Modelové cvičení: Střídání směrů…"
+    }
+  },
+  {
+    "id": "stafetove-hry",
+    "kategorie": "Hry",
+    "prvek": "Štafetové hry",
+    "popis": "Soutěžení ve dvojicích/skupinách, s pukem nebo bez",
+    "psychosomatika": "Nábor – 2. třída: Základní organizace pohybu a orientace.\n3.–4. třída: Přidáváme obratnost a rychlost.\n5.–8. třída: Kombinujeme s herními situacemi a taktikou.",
+    "obsah": {
+      "nabor": "Neformální štafety (žába skok)…",
+      "1": "Slalomová štafeta – předání puku/pomůcky…",
+      "2": "Přesná přihrávková štafeta…",
+      "3": "Slalom s kotoučem, štafeta s obraty, překážky…",
+      "4": "Zrcadlová štafeta (reakce a týmová spolupráce)…",
+      "5-6": "Reakční štafeta s rozhodováním (barvy/gesta)…",
+      "7-8": "Štafeta s herní situací 1v0/2v0 – rychlost, střelba, taktika…"
+    }
+  },
+  {
+    "id": "hry-s-kotoucem",
+    "kategorie": "Hry",
+    "prvek": "Hry s kotoučem",
+    "popis": "Pukové honičky, vedení, přetahování o puk",
+    "psychosomatika": "Nábor – 2. třída: Rozvoj citu pro kotouč.\n3.–4. třída: Přidáváme soupeře a omezení prostoru.\n5.–8. třída: Simulace reálné hry, práce s tlakem a krytí.",
+    "obsah": {
+      "nabor": "Vedení puku mezi kužely…",
+      "1": "Zrcadlové vedení puku ve dvojicích…",
+      "2": "Bitva o puk na malém prostoru…",
+      "3": "Slalom s pukem a změnou směru…",
+      "4": "Přesná přihrávka ve hře…",
+      "5-6": "Kombinační vedení puku (FH/BH + změny směru)…",
+      "7-8": "Kontaktní vedení puku v herní situaci (tlak obránce)…"
+    }
+  }
+]
