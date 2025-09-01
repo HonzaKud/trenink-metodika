@@ -1,46 +1,32 @@
-import { filterData, VEKY } from "@/lib/filters";
-import type { VekStupen } from "@/lib/types";
 import PrvekCard from "@/components/ui/PrvekCard";
+import FilterBar from "@/components/ui/FilterBar";
+import { getDataByKat } from "@/lib/filters";
+import type { VekStupen } from "@/lib/types";
 
-export default function SearchPage({
+type SP = { vek?: VekStupen; kat?: string };
+
+export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { kat?: string; prvek?: string; vek?: VekStupen; q?: string };
+  searchParams: Promise<SP>;
 }) {
-  const vek: VekStupen = (searchParams.vek as VekStupen) ?? "nabor";
+  const { vek = "nabor", kat = "" } = await searchParams;
 
-  const results = filterData({
-    kategorie: searchParams.kat,
-    prvek: searchParams.prvek,
-    vek,
-    q: searchParams.q,
-  });
-
-  const vekLabel =
-    VEKY.find((v) => v.value === vek)?.label ?? "Nábor";
+  const results = kat ? getDataByKat(kat) : [];
 
   return (
-    <main className="space-y-6">
-      <h2 className="text-xl font-semibold">
-        Výsledky {results.length ? `(${results.length})` : ""}
-      </h2>
+    <main className="max-w-5xl mx-auto p-6 space-y-6">
+      <FilterBar />
 
-      <p className="text-sm text-gray-600">
-        Věk: <b>{vekLabel}</b>
-        {searchParams.kat && <> · Kategorie: <b>{searchParams.kat}</b></>}
-        {searchParams.prvek && <> · Prvek: <b>{searchParams.prvek}</b></>}
-        {searchParams.q && <> · Hledání: <b>{searchParams.q}</b></>}
-      </p>
+      <div className="text-sm text-gray-700">
+        Výběr: <b>{kat || "—"}</b>, <b>{vek}</b>
+      </div>
 
       <section className="grid gap-4 md:grid-cols-2">
         {results.length > 0 ? (
-          results.map((item) => (
-            <PrvekCard key={item.id} item={item} vek={vek} />
-          ))
+          results.map((item) => <PrvekCard key={item.id} item={item} vek={vek} />)
         ) : (
-          <div className="text-sm text-gray-600">
-            Nic jsme nenašli. Zkus upravit filtry.
-          </div>
+          <div className="text-sm text-gray-600">Nic jsme nenašli. Zkus upravit filtry.</div>
         )}
       </section>
     </main>
