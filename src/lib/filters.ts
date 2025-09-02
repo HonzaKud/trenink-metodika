@@ -1,7 +1,12 @@
-import hry from "@/data/hry.json";
-import brusleni from "@/data/brusleni.json";
-import rychlost from "@/data/rychlost.json";
-// případně další kategorie importem (strelba.json apod.)
+import type { HraCZ, VekStupen } from "@/lib/types";
+
+import dataNabor from "@/data/nabor.json";
+import data1 from "@/data/1.json";
+import data2 from "@/data/2.json";
+import data3 from "@/data/3.json";
+import data4 from "@/data/4.json";
+import data56 from "@/data/5-6.json";
+import data78 from "@/data/7-8.json";
 
 export const VEKY = [
   { value: "nabor", label: "Nábor" },
@@ -13,18 +18,27 @@ export const VEKY = [
   { value: "7-8", label: "7.–8. třída" },
 ] as const;
 
-const ALL = [
-  ...hry,
-  ...brusleni,
-  ...rychlost,
-  // ...strelba
-];
+// Fixní seznam kategorií dle zadání
+export const KATEGORIE = [
+  "Bruslení",
+  "Střelba",
+  "Technika hole",
+  "HČJ",
+  "Hry",
+] as const;
 
-export function listKategorie(): string[] {
-  // Vytáhne unikátní hodnoty kategorie z dat
-  return Array.from(new Set(ALL.map(x => x.kategorie))).sort();
-}
+const BY_VEK: Record<VekStupen, HraCZ[]> = {
+  nabor: dataNabor as HraCZ[],
+  "1": data1 as HraCZ[],
+  "2": data2 as HraCZ[],
+  "3": data3 as HraCZ[],
+  "4": data4 as HraCZ[],
+  "5-6": data56 as HraCZ[],
+  "7-8": data78 as HraCZ[],
+};
 
-export function getDataByKat(kat: string) {
-  return ALL.filter(x => x.kategorie === kat);
+// Vrátí všechny položky pro daný ročník a kategorii
+export function getByVekAndKat(vek: VekStupen, kat: string): HraCZ[] {
+  const arr = BY_VEK[vek] ?? [];
+  return arr.filter((x) => x.kategorie === kat);
 }
