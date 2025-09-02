@@ -2,12 +2,30 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a; /* slate-900 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Brand modrá (z loga) – škála */
+  --color-brand-50:  #f3f8ff;
+  --color-brand-100: #e6f0fe;
+  --color-brand-200: #c6ddfb;
+  --color-brand-300: #9cc3f5;
+  --color-brand-400: #6ba4ec;
+  --color-brand-500: #3b86e0; /* primární */
+  --color-brand-600: #256cc6;
+  --color-brand-700: #1856a5; /* header/hover */
+  --color-brand-800: #123f79;
+  --color-brand-900: #0d2c56; /* tmavá z loga */
+
+  /* Ledově světlá pro pozadí panelů */
+  --color-ice-50:  #f7fbff;
+  --color-ice-100: #eef5fc;
+
+  /* Nechme výchozí fonty, případně později nahradíme za klubový */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -22,5 +40,17 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Hezčí focus ring napříč prvky */
+:where(button, a, select, summary, input, textarea):focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+/* Reset appearance pro selecty, ať to vypadá stejně napříč prohlížeči */
+select {
+  appearance: none;
+  background-image: none;
 }
