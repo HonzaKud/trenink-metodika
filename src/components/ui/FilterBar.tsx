@@ -17,14 +17,14 @@ export default function FilterBar() {
   const router = useRouter();
   const search = useSearchParams();
 
-  // povolíme "prázdnou" hodnotu => placeholder
   const [vek, setVek] = useState<VekStupen | "">((search.get("vek") as VekStupen) ?? "");
   const [kat, setKat] = useState<string>(search.get("kat") ?? "");
 
-  // nic nevyplňuj automaticky; uživatel musí zvolit obě hodnoty
+  // ❗ Bez `any`: ověříme, že kat je v whitelistu
   useEffect(() => {
-    // pokud je v URL neplatná kategorie mimo whitelist, vynuluj
-    if (kat && !KATEGORIE.includes(kat as any)) setKat("");
+    if (kat && !(KATEGORIE as readonly string[]).includes(kat)) {
+      setKat("");
+    }
   }, [kat]);
 
   const canSearch = !!vek && !!kat;
@@ -111,7 +111,6 @@ export default function FilterBar() {
         </div>
       </div>
 
-      {/* Přátelská nápověda pro čtečky (a11y) */}
       <p className="sr-only" aria-live="polite">
         {canSearch ? "Připraveno k vyhledání." : "Vyberte prosím oba filtry."}
       </p>
