@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { VEKY, KATEGORIE } from "@/lib/filters";
+import { VEKY, KATEGORIE } from "@/lib/filters"; // nebo "@/lib/constants"
 import type { VekStupen } from "@/lib/types";
 
 function ChevronDown() {
@@ -17,14 +17,20 @@ export default function FilterBar() {
   const router = useRouter();
   const search = useSearchParams();
 
-  const [vek, setVek] = useState<VekStupen>((search.get("vek") as VekStupen) ?? "nabor");
+  // povolíme "prázdnou" hodnotu => placeholder
+  const [vek, setVek] = useState<VekStupen | "">((search.get("vek") as VekStupen) ?? "");
   const [kat, setKat] = useState<string>(search.get("kat") ?? "");
 
+  // nic nevyplňuj automaticky; uživatel musí zvolit obě hodnoty
   useEffect(() => {
-    if (!kat) setKat(KATEGORIE[0]);
+    // pokud je v URL neplatná kategorie mimo whitelist, vynuluj
+    if (kat && !KATEGORIE.includes(kat as any)) setKat("");
   }, [kat]);
 
+  const canSearch = !!vek && !!kat;
+
   const submit = () => {
+    if (!canSearch) return;
     router.push(`/search?vek=${encodeURIComponent(vek)}&kat=${encodeURIComponent(kat)}`);
   };
 
@@ -37,20 +43,32 @@ export default function FilterBar() {
     </div>
   );
 
+  const baseSelectCls =
+    "w-full rounded-xl border border-slate-300 bg-white px-3 py-2 pr-9 text-sm shadow-sm focus:ring-2 focus:ring-brand-500";
+
   return (
     <section className="rounded-2xl bg-white shadow-sm border border-brand-100 p-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Věk */}
         <div className="flex flex-col">
-          <label className="text-xs font-medium text-slate-600 mb-1">Věk (ročník)</label>
+          <label htmlFor="vek" className="text-xs font-medium text-slate-600 mb-1">
+            Věk (ročník)
+          </label>
           <SelectWrap>
             <select
-              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 pr-9 text-sm shadow-sm focus:ring-2 focus:ring-brand-500"
+              id="vek"
+              className={`${baseSelectCls} ${!vek ? "text-slate-400" : ""}`}
               value={vek}
-              onChange={(e) => setVek(e.target.value as VekStupen)}
+              onChange={(e) => setVek(e.target.value as VekStupen | "")}
+              aria-invalid={!vek}
             >
+              <option value="" disabled>
+                — Vyberte věk —
+              </option>
               {VEKY.map((v) => (
-                <option key={v.value} value={v.value}>{v.label}</option>
+                <option key={v.value} value={v.value}>
+                  {v.label}
+                </option>
               ))}
             </select>
           </SelectWrap>
@@ -58,15 +76,24 @@ export default function FilterBar() {
 
         {/* Kategorie */}
         <div className="flex flex-col">
-          <label className="text-xs font-medium text-slate-600 mb-1">Kategorie</label>
+          <label htmlFor="kat" className="text-xs font-medium text-slate-600 mb-1">
+            Kategorie
+          </label>
           <SelectWrap>
             <select
-              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 pr-9 text-sm shadow-sm focus:ring-2 focus:ring-brand-500"
+              id="kat"
+              className={`${baseSelectCls} ${!kat ? "text-slate-400" : ""}`}
               value={kat}
               onChange={(e) => setKat(e.target.value)}
+              aria-invalid={!kat}
             >
+              <option value="" disabled>
+                — Vyberte kategorii —
+              </option>
               {KATEGORIE.map((k) => (
-                <option key={k} value={k}>{k}</option>
+                <option key={k} value={k}>
+                  {k}
+                </option>
               ))}
             </select>
           </SelectWrap>
@@ -76,12 +103,18 @@ export default function FilterBar() {
         <div className="flex items-end">
           <button
             onClick={submit}
-            className="inline-flex w-full md:w-auto items-center justify-center rounded-xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 active:bg-brand-800 transition"
+            disabled={!canSearch}
+            className="inline-flex w-full md:w-auto items-center justify-center rounded-xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 active:bg-brand-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Vyhledat
           </button>
         </div>
       </div>
+
+      {/* Přátelská nápověda pro čtečky (a11y) */}
+      <p className="sr-only" aria-live="polite">
+        {canSearch ? "Připraveno k vyhledání." : "Vyberte prosím oba filtry."}
+      </p>
     </section>
   );
 }
