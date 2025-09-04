@@ -17,8 +17,8 @@ export default function HomePage() {
         <FilterBar />
       </Suspense>
 
-      {/* Info text */}
-      <p className="text-sm text-gray-600">
+      {/* Info text (vycentrovaný) */}
+      <p className="text-sm text-gray-600 text-center">
         Vyber parametry a klikni na <b>Vyhledat</b>. Výsledky se zobrazí na stránce „Search“.
       </p>
 
@@ -38,7 +38,7 @@ export default function HomePage() {
       <section aria-labelledby="partners-heading" className="mt-2">
         <h2
           id="partners-heading"
-          className="text-xs font-medium uppercase tracking-wide text-slate-500 text-center mb-3"
+          className="text-sm md:text-base font-semibold tracking-wide text-slate-700 text-center mb-3"
         >
           Podporují nás
         </h2>
