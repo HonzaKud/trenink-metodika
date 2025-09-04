@@ -20,11 +20,8 @@ export default function FilterBar() {
   const [vek, setVek] = useState<VekStupen | "">((search.get("vek") as VekStupen) ?? "");
   const [kat, setKat] = useState<string>(search.get("kat") ?? "");
 
-  // ❗ Bez `any`: ověříme, že kat je v whitelistu
   useEffect(() => {
-    if (kat && !(KATEGORIE as readonly string[]).includes(kat)) {
-      setKat("");
-    }
+    if (kat && !(KATEGORIE as readonly string[]).includes(kat)) setKat("");
   }, [kat]);
 
   const canSearch = !!vek && !!kat;
@@ -57,12 +54,12 @@ export default function FilterBar() {
           <SelectWrap>
             <select
               id="vek"
-              className={`${baseSelectCls} ${!vek ? "text-slate-400" : ""}`}
+              className={baseSelectCls} // vždy černý text
               value={vek}
               onChange={(e) => setVek(e.target.value as VekStupen | "")}
               aria-invalid={!vek}
             >
-              <option value="" disabled>
+              <option value="" disabled className="italic">
                 — Vyberte věk —
               </option>
               {VEKY.map((v) => (
@@ -82,12 +79,12 @@ export default function FilterBar() {
           <SelectWrap>
             <select
               id="kat"
-              className={`${baseSelectCls} ${!kat ? "text-slate-400" : ""}`}
+              className={baseSelectCls} // vždy černý text
               value={kat}
               onChange={(e) => setKat(e.target.value)}
               aria-invalid={!kat}
             >
-              <option value="" disabled>
+              <option value="" disabled className="italic">
                 — Vyberte kategorii —
               </option>
               {KATEGORIE.map((k) => (
